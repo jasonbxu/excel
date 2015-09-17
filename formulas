@@ -1,0 +1,32 @@
+// Indirect for sheet and cell 
+INDIRECT("'" & A2 & "'!" & B2)
+
+// Indirect for file name, sheet, and cell
+INDIRECT("'[" & A2 & "]" & A3 & "'!" & A4)
+
+// Sum only numbers w/o error, require array
+SUM(IF(ISERROR(A1:A10),0,A1:A10))
+
+// Sum with multiple conditions
+SUM((A2:A10="Fax")*(B2:B10="Brown")*(C2:C10))
+
+// solves problem of above formula returning 0
+MEDIAN(IF($AC$2:$AC$105=T149,$T$2:$T$105)); 
+
+// Sum using or Function:
+SUM(IF(((A2:A10="Fax")+(B2:B10="Jones"))>0,1,0))
+
+// Sum using XOR Function:
+SUM(IF(MOD((A2:A10="Fax")+(B2:B10="Jones"),2),1,0))
+
+// Sum using NAND Function:
+SUM(IF((A2:A10="Fax")+(B2:B10="Jones")<>2,1,0))
+
+// Sampe of a combined Formula:
+SUM((MONTH(INDIRECT("'"&C4&"'!"&C5))=B8)*(INDIRECT("'"&C4&"'!"&C6)))
+
+// More complex formula to sum by months
+SUM((LEFT(INDIRECT("'"&$C$21&"'!"&$C$22),3)=TEXT($B25,0))*(INDIRECT("'"&$C$21&"'!"&$E$22)))
+
+// super clutch formula to look for ending month of a stream of payments
+=MAX(COLUMN(D22:CC22)*(D22:CC22<>""))
