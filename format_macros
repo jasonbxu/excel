@@ -1,0 +1,951 @@
+Public Sub Auto_Open()
+  With Application
+    ' +^ for CTRL+SHIFT
+    ' ^ for CTRL
+    'Borders
+    .OnKey "+^D", "DoubleUnderline"
+    .OnKey "^e", "DottedLine"
+    .OnKey "+^Z", "FaintLine"
+    .OnKey "+^T", "BorderTop"
+    .OnKey "+^B", "BorderBottom"
+    .OnKey "+^R", "BorderRight"
+    .OnKey "+^L", "BorderLeft"
+    'Height / Alignment
+    .OnKey "^a", "AlignToggle" '8/2/06
+    .OnKey "+^J", "RightAlign"
+    .OnKey "+^H", "CenterAlign"
+    .OnKey "+^G", "LeftAlign"
+    .OnKey "+^S", "CenterAcrossSelection"
+    .OnKey "+^I", "IndentToggle" '7/28/05
+    .OnKey "^h", "HeightToggle" '8/2/06
+    .OnKey "^l", "Fourteen"
+    .OnKey "^k", "Eleven"
+    .OnKey "^j", "Three"
+    .OnKey "+^M", "MiddleAlignToggle" '7/28/05
+    'Color
+    .OnKey "^w", "Black"
+    .OnKey "^q", "Blue"
+    '.OnKey "^a", "Red"
+    .OnKey "^y", "OracleColor"
+    '.OnKey "^m", "BackgroundColor"
+    'Numbers
+    .OnKey "+^C", "PasteFormat"
+    .OnKey "+^V", "PasteValues" '7/28/05
+    .OnKey "+^Q", "NumberToggle"
+    .OnKey "+^A", "DollarToggle"
+    .OnKey "+^E", "PercentToggle"
+    .OnKey "+^X", "MultipleToggle"
+    .OnKey "+^`", "ToggleDash"
+    
+    'Legacy Non-Toggle Numbers
+    '.OnKey "+^M", "NumberThree" --> "MiddleAlignToggle"
+    '.OnKey "+^!", "NumberTwo"
+    '.OnKey "+^V", "NumberZero" --> "PasteValues"
+    '.OnKey "+^$", "DollarTwo"
+    '.OnKey "+^K", "DollarZero"
+    
+    'Navigation
+    .OnKey "+^*", "ZoomToggle" '8/2/06
+    '.OnKey "^g", "TraceDependents"
+    '.OnKey "^t", "TracePrecedents"
+    .OnKey "^m", "RemoveArrows"
+    '.OnKey "+^>", "ColumnOutlineToggle" '7/28/05
+    '.OnKey "+^<", "RowOutlineToggle" '7/28/05
+    '.OnKey "+^<", "FreezePanesToggle" '7/28/05
+    'Misc
+    '.OnKey "+^?", "CommentToggle" '7/28/05
+    .OnKey "+^Y", "SetPrintArea"
+    .OnKey "+^W", "ClearPrintArea"
+    '.OnKey "^h", "ConvertReference"
+    .OnKey "+^U", "GridlinesToggle"
+    '.OnKey "+^0", "IsErrorToggle" '7/28/05
+    '.OnKey "+^9", "IndirectVlookupToggle" '7/28/05
+    '.OnKey "+^6", "MasterDOM" '7/28/05
+    .OnKey "{F1}", "" 'Setting the F1 Key to be blank
+    
+  End With
+  ThisWorkbook.Saved = True
+  Dash = True
+  Iteration = True
+End Sub
+
+'#######################################################
+'                       BORDERS
+'#######################################################
+
+Sub DoubleUnderline()
+' DoubleUnderline Macro
+' Keyboard Shortcut: Ctrl+Shift+D
+    With Selection.Borders(xlEdgeBottom)
+        If .LineStyle = xlDouble Then 'if same border type, blank
+            .LineStyle = xlNone
+            .ColorIndex = xlNone
+        Else: 'if anything else, border
+            .LineStyle = xlDouble
+            .ColorIndex = xlAutomatic
+        End If
+    End With
+End Sub
+
+Sub DottedLine()
+' Makes the current selection have a dotted line for the bottom border.
+' Keyboard Shortcut: Ctrl+e
+    With Selection.Borders(xlEdgeBottom)
+    If .Weight = xlThin And .LineStyle = xlDot Then 'if same border type, blank
+        .LineStyle = xlNone
+        .ColorIndex = xlNone
+    Else: 'if anything else, border
+    .LineStyle = xlDot
+    .Weight = xlThin
+    .ColorIndex = xlAutomatic
+    End If
+    End With
+End Sub
+
+Sub FaintLine()
+' Faint Line Macro
+' Keyboard Shortcut: Ctrl+Shift+Z
+   With Selection.Borders(xlBottom)
+    If .Weight = xlHairline And .LineStyle = xlContinuous Then 'if same border type, blank
+        .LineStyle = xlNone
+        .ColorIndex = xlNone
+    Else: 'if anything else, border
+    .LineStyle = xlContinuous
+    .Weight = xlHairline
+    .ColorIndex = xlAutomatic
+    End If
+   End With
+End Sub
+
+Sub BorderBottom()
+' BorderBottom Macro
+' Keyboard Shortcut: Ctrl+Shift+B
+  With Selection.Borders(xlEdgeBottom)
+    If .Weight = xlThin And .LineStyle = xlContinuous Then 'if same border type, blank
+        .LineStyle = xlNone
+        .ColorIndex = xlNone
+    Else: 'if anything else, border
+    .LineStyle = xlContinuous
+    .Weight = xlThin
+    .ColorIndex = xlAutomatic
+    End If
+  End With
+End Sub
+
+Sub BorderTop()
+' BorderTop Macro
+' Keyboard Shortcut: Ctrl+Shift+T
+  With Selection.Borders(xlEdgeTop)
+    If .Weight = xlThin And .LineStyle = xlContinuous Then 'if same border type, blank
+        .LineStyle = xlNone
+        .ColorIndex = xlNone
+    Else: 'if anything else, border
+    .LineStyle = xlContinuous
+    .Weight = xlThin
+    .ColorIndex = xlAutomatic
+    End If
+  End With
+End Sub
+
+Sub BorderRight()
+' BorderRight Macro
+' Keyboard Shortcut: Ctrl+Shift+R
+  With Selection.Borders(xlEdgeRight)
+    If .Weight = xlThin And .LineStyle = xlContinuous Then 'if same border type, blank
+        .LineStyle = xlNone
+        .ColorIndex = xlNone
+    Else: 'if anything else, border
+    .LineStyle = xlContinuous
+    .Weight = xlThin
+    .ColorIndex = xlAutomatic
+    End If
+  End With
+End Sub
+
+Sub BorderLeft()
+' BorderLeft Macro
+' Keyboard Shortcut: Ctrl+Shift+L
+  With Selection.Borders(xlEdgeLeft)
+    If .Weight = xlThin And .LineStyle = xlContinuous Then 'if standard border, blank
+        .LineStyle = xlNone
+        .ColorIndex = xlNone
+    Else: 'if anything else, border
+    .LineStyle = xlContinuous
+    .Weight = xlThin
+    .ColorIndex = xlAutomatic
+    End If
+  End With
+End Sub
+
+'#######################################################
+'                       Height / Alignment
+'#######################################################
+
+Sub AlignToggle()
+' AlignToggle Macro
+' Keyboard Shortcut: Ctrl+a
+
+    If Selection.HorizontalAlignment = xlHAlignLeft Or Selection.HorizontalAlignment = xlHAlignGeneral Then
+        Selection.HorizontalAlignment = xlHAlignCenter
+    ElseIf Selection.HorizontalAlignment = xlHAlignCenter Then
+        Selection.HorizontalAlignment = xlHAlignRight
+    Else
+        Selection.HorizontalAlignment = xlHAlignLeft
+    End If
+
+End Sub
+
+Sub RightAlign()
+' RightAlign Macro
+' Keyboard Shortcut: Ctrl+Shift+J
+  Selection.HorizontalAlignment = xlHAlignRight
+End Sub
+
+Sub CenterAlign()
+' CenterAlign Macro
+' Keyboard Shortcut: Ctrl+Shift+H
+  Selection.HorizontalAlignment = xlHAlignCenter
+End Sub
+
+Sub LeftAlign()
+' LeftAlign Macro
+' Keyboard Shortcut: Ctrl+Shift+G
+  Selection.HorizontalAlignment = xlHAlignLeft
+End Sub
+
+Sub CenterAcrossSelection()
+' CenterAcrossSelection Macro
+' Keyboard Shortcut: Ctrl+Shift+S
+  If Selection.HorizontalAlignment = xlHAlignCenterAcrossSelection Then
+    Selection.HorizontalAlignment = xlHAlignGeneral
+  Else
+    Selection.HorizontalAlignment = xlHAlignCenterAcrossSelection
+  End If
+End Sub
+
+Sub IndentToggle()
+' Cycles through indenting
+' Keyboard Shortcut: CTRL+SHIFT+I
+    With Selection
+        If .HorizontalAlignment = xlLeft And .IndentLevel = 1 Then
+            .IndentLevel = 2
+        ElseIf .HorizontalAlignment = xlLeft And .IndentLevel = 2 Then
+            .HorizontalAlignment = xlGeneral
+        Else:
+            .HorizontalAlignment = xlLeft
+            .IndentLevel = 1
+        End If
+    End With
+End Sub
+
+Sub HeightToggle()
+' Keyboard Shortcut: Ctrl+a
+    If Selection.RowHeight = 12.75 Then
+        Selection.RowHeight = 10
+    ElseIf Selection.RowHeight = 10 Then
+        Selection.RowHeight = 3
+    ElseIf Selection.RowHeight = 3 Then
+        Selection.RowHeight = 12.75
+    Else
+        Selection.RowHeight = 12.75
+    End If
+End Sub
+
+Sub Fourteen()
+' Keyboard Shortcut: Ctrl+l
+  Selection.RowHeight = 15.5
+End Sub
+
+Sub Three()
+' Keyboard Shortcut: Ctrl+j
+  Selection.RowHeight = 3
+End Sub
+
+Sub Eleven()
+' Keyboard Shortcut: Ctrl+k
+  Selection.RowHeight = 11.25
+End Sub
+
+Sub MiddleAlignToggle()
+' Keyboard Shortcut: Ctrl+Shift+M
+    If Selection.VerticalAlignment = xlCenter Then
+        Selection.VerticalAlignment = xlBottom
+    ElseIf Selection.VerticalAlignment = xlBottom Then
+        Selection.VerticalAlignment = xlTop
+    ElseIf Selection.VerticalAlignment = xlTop Then
+        Selection.VerticalAlignment = xlCenter
+    Else
+        Selection.VerticalAlignment = xlCenter 'Catchall for everything else. Most likely not necessary.
+    End If
+End Sub
+
+'#######################################################
+'                       Color
+'#######################################################
+
+Sub Blue()
+' Makes the current selection blue.  The color of choice for input cells.
+' Keyboard Shortcut: Ctrl+Q
+    If Selection.Font.Color = RGB(0, 0, 255) Then '(Light Blue)
+        Selection.Font.Color = RGB(34, 139, 34)  '(Forest Green)
+    ElseIf Selection.Font.Color = RGB(34, 139, 34) Then '(Forest Green)
+        Selection.Font.Color = RGB(255, 255, 255) '(White)
+    ElseIf Selection.Font.Color = RGB(255, 255, 255) Then '(White)
+        Selection.Font.Color = RGB(0, 0, 255) '(Light Blue)
+    Else
+        Selection.Font.Color = RGB(0, 0, 255) '(Light Blue)
+    End If
+End Sub
+
+Sub White()
+' Makes the current selection white.  The color of choice for hiding cells from the print out.
+' Keyboard Shortcut: Ctrl+Y
+  Selection.Font.Color = RGB(255, 255, 255) 'ColorIndex=14
+End Sub
+
+Sub Red()
+' Makes the current selection red.  The color of choice when a cell references
+' another worksheet or workbook.
+' Keyboard Shortcut: Ctrl+A
+  Selection.Font.Color = RGB(255, 0, 0)  'ColorIndex=7
+End Sub
+
+Sub Black()
+' Makes the current selection the auto color (black).  The color of choice for calculated cells.
+' Keyboard Shortcut: Ctrl+W
+  Selection.Font.ColorIndex = xlColorIndexAutomatic
+'  Selection.Font.Color = RGB(0, 0, 0)
+End Sub
+
+Sub BackgroundColor()
+' Keyboard Shortcut: Ctrl+m
+    If Selection.Interior.ColorIndex = xlNone Then
+        Selection.Interior.Color = RGB(255, 255, 255)
+    ElseIf Selection.Interior.Color = RGB(255, 255, 255) Then
+        Selection.Interior.ColorIndex = xlNone
+    'Else
+    '    Selection.Interior.ColorIndex = 17
+    End If
+End Sub
+
+Sub OracleColor()
+' Set Background to Oracle Red, Text to White
+    If Selection.Interior.ColorIndex = xlNone Then
+        Selection.Interior.Color = RGB(255, 0, 0)
+        Selection.Font.Color = RGB(255, 255, 255)
+    ElseIf Selection.Interior.Color = RGB(255, 0, 0) Then
+        Selection.Interior.ColorIndex = xlNone
+        Selection.Font.ColorIndex = xlColorIndexAutomatic
+    End If
+End Sub
+
+
+
+
+'#######################################################
+'                       Numbers
+'#######################################################
+
+Sub PasteFormat()
+' CopyFormat Macro
+' Shortcut key: C
+  On Error Resume Next
+  Selection.PasteSpecial Paste:=xlFormats
+  Application.CutCopyMode = False
+End Sub
+
+Sub PasteValues()
+    On Error Resume Next
+    Selection.PasteSpecial Paste:=xlValues
+    Application.CutCopyMode = False
+End Sub
+Sub ToggleDash()
+' ToggleDash Macro
+' Shortcut Key: |
+
+If ThisWorkbook.Sheets(1).Range("DashToggle").Value = 0 Then
+ThisWorkbook.Sheets(1).Range("DashToggle").Value = 1
+Else
+ThisWorkbook.Sheets(1).Range("DashToggle").Value = 0
+End If
+
+End Sub
+
+Sub PercentToggle()
+' PercentToggle Macro
+' Shortcut Key: E
+
+Dim Dash As Boolean
+Dim OneWith As String
+Dim TwoWith As String
+'Dim ThreeWith As String
+Dim OneWithout As String
+Dim TwoWithout As String
+'Dim ThreeWithout As String
+
+OneWith = "#,##0%_);(#,##0%);--_%_);@_)"
+TwoWith = "#,##0.0%_);(#,##0.0%);--_%_);@_)"
+'ThreeWith = "#,##0.00%_);(#,##0.00%);--_%_);@_%_)"
+
+OneWithout = "#,##0%_);(#,##0%);#,##0%_);@_)"
+TwoWithout = "#,##0.0%_);(#,##0.0%);#,##0.0%_);@_)"
+'ThreeWithout = "#,##0.00%_);(#,##0.00%);#,##0.00%_);@_%_)"
+
+If ThisWorkbook.Sheets(1).Range("DashToggle").Value = 1 Then
+    Dash = True
+Else
+    Dash = False
+End If
+
+If Dash = True Then
+    If Selection.NumberFormat = TwoWith Or Selection.NumberFormat = TwoWithout Then
+        Selection.NumberFormat = OneWith
+    'ElseIf Selection.NumberFormat = OneWith Or Selection.NumberFormat = OneWithout Then
+    '    Selection.NumberFormat = ThreeWith
+    'ElseIf Selection.NumberFormat = ThreeWith Or Selection.NumberFormat = ThreeWithout Then
+    '    Selection.NumberFormat = TwoWith
+    Else: Selection.NumberFormat = TwoWith
+    End If
+    
+End If
+
+If Dash = False Then
+    If Selection.NumberFormat = TwoWith Or Selection.NumberFormat = TwoWithout Then
+        Selection.NumberFormat = OneWithout
+    'ElseIf Selection.NumberFormat = OneWith Or Selection.NumberFormat = OneWithout Then
+    '    Selection.NumberFormat = ThreeWithout
+    'ElseIf Selection.NumberFormat = ThreeWith Or Selection.NumberFormat = ThreeWithout Then
+    '    Selection.NumberFormat = TwoWithout
+    Else: Selection.NumberFormat = TwoWithout
+    End If
+    
+End If
+
+End Sub
+Sub DollarToggle()
+' DollarToggle Macro
+' Shortcut Key: A
+
+Dim Dash As Boolean
+Dim OneWith As String
+Dim TwoWith As String
+Dim ThreeWith As String
+'Dim FourWith As String
+Dim OneWithout As String
+Dim TwoWithout As String
+Dim ThreeWithout As String
+'Dim FourWithout As String
+
+OneWithout = "$#,##0_);($#,##0);$#,##0_);@_)"
+TwoWithout = "$#,##0.0_);($#,##0.0);$#,##0.0_);@_)"
+ThreeWithout = "$#,##0.00_);($#,##0.00);$#,##0.00_);@_)"
+'FourWithout = "$#,##0.000_%_);($#,##0.000)_%;$#,##0.000_%_);@_%_)"
+
+OneWith = "$#,##0_);($#,##0);--_);@_)"
+TwoWith = "$#,##0.0_);($#,##0.0);--_);@_)"
+ThreeWith = "$#,##0.00_);($#,##0.00);--_);@_)"
+'FourWith = "$#,##0.000_%_);($#,##0.000)_%;--_%_);@_%_)"
+
+If ThisWorkbook.Sheets(1).Range("DashToggle").Value = 1 Then
+    Dash = True
+Else
+    Dash = False
+End If
+
+If Dash = True Then
+    If Selection.NumberFormat = TwoWith Or Selection.NumberFormat = TwoWithout Then
+        Selection.NumberFormat = OneWith
+    ElseIf Selection.NumberFormat = OneWith Or Selection.NumberFormat = OneWithout Then
+        Selection.NumberFormat = ThreeWith
+    'ElseIf Selection.NumberFormat = ThreeWith Or Selection.NumberFormat = ThreeWithout Then
+    '    Selection.NumberFormat = FourWith
+    'ElseIf Selection.NumberFormat = FourWith Or Selection.NumberFormat = FourWithout Then
+    '    Selection.NumberFormat = TwoWith
+    Else: Selection.NumberFormat = TwoWith
+    End If
+End If
+
+If Dash = False Then
+    If Selection.NumberFormat = TwoWith Or Selection.NumberFormat = TwoWithout Then
+        Selection.NumberFormat = OneWithout
+    ElseIf Selection.NumberFormat = OneWith Or Selection.NumberFormat = OneWithout Then
+        Selection.NumberFormat = ThreeWithout
+    'ElseIf Selection.NumberFormat = ThreeWith Or Selection.NumberFormat = ThreeWithout Then
+    '    Selection.NumberFormat = FourWithout
+    'ElseIf Selection.NumberFormat = FourWith Or Selection.NumberFormat = FourWithout Then
+    '    Selection.NumberFormat = TwoWithout
+    Else: Selection.NumberFormat = TwoWithout
+    End If
+End If
+
+End Sub
+Sub NumberToggle()
+' NumberToggle Macro
+' Shortcut Key: Q
+
+Dim Dash As Boolean
+Dim OneWith As String
+Dim TwoWith As String
+Dim ThreeWith As String
+'Dim FourWith As String
+Dim OneWithout As String
+Dim TwoWithout As String
+Dim ThreeWithout As String
+'Dim FourWithout As String
+
+OneWithout = "#,##0_);(#,##0);#,##0_);@_)"
+TwoWithout = "#,##0.0_);(#,##0.0);#,##0.0_);@_)"
+ThreeWithout = "#,##0.00_);(#,##0.00);#,##0.00_);@_)"
+'FourWithout = "#,##0.000_);(#,##0.000);#,##0.000_);@_)"
+
+OneWith = "#,##0_);(#,##0);--_);@_)"
+TwoWith = "#,##0.0_);(#,##0.0);--_);@_)"
+ThreeWith = "#,##0.00_);(#,##0.00);--_);@_)"
+'FourWith = "#,##0.000_);(#,##0.000);--_);@_)"
+
+If ThisWorkbook.Sheets(1).Range("DashToggle").Value = 1 Then
+    Dash = True
+Else
+    Dash = False
+End If
+
+If Dash = True Then
+    If Selection.NumberFormat = TwoWith Or Selection.NumberFormat = TwoWithout Then
+        Selection.NumberFormat = OneWith
+    ElseIf Selection.NumberFormat = OneWith Or Selection.NumberFormat = OneWithout Then
+        Selection.NumberFormat = ThreeWith
+    'ElseIf Selection.NumberFormat = ThreeWith Or Selection.NumberFormat = ThreeWithout Then
+    '    Selection.NumberFormat = FourWith
+    'ElseIf Selection.NumberFormat = FourWith Or Selection.NumberFormat = FourWithout Then
+    '    Selection.NumberFormat = TwoWith
+    Else: Selection.NumberFormat = TwoWith
+    End If
+End If
+
+If Dash = False Then
+    If Selection.NumberFormat = TwoWith Or Selection.NumberFormat = TwoWithout Then
+        Selection.NumberFormat = OneWithout
+    ElseIf Selection.NumberFormat = OneWith Or Selection.NumberFormat = OneWithout Then
+        Selection.NumberFormat = ThreeWithout
+    'ElseIf Selection.NumberFormat = ThreeWith Or Selection.NumberFormat = ThreeWithout Then
+    '    Selection.NumberFormat = FourWithout
+    'ElseIf Selection.NumberFormat = FourWith Or Selection.NumberFormat = FourWithout Then
+    '    Selection.NumberFormat = TwoWithout
+    Else: Selection.NumberFormat = TwoWithout
+    End If
+End If
+
+End Sub
+Sub MultipleToggle()
+' MultipleToggle Macro
+' Shortcut Key: X
+
+Dim Dash As Boolean
+Dim OneWith As String
+Dim TwoWith As String
+'Dim ThreeWith As String
+Dim OneWithout As String
+Dim TwoWithout As String
+'Dim ThreeWithout As String
+
+OneWith = "#,##0x_)_);(#,##0x)_);--_%_);@_%_)"
+TwoWith = "#,##0.0x_)_);(#,##0.0x)_);--_%_);@_%_)"
+'ThreeWith = "#,##0.00x_)_);(#,##0.00x)_);--_%_);@_%_)"
+
+OneWithout = "#,##0x_)_);(#,##0x)_);#,##0x_)_);@_%_)"
+TwoWithout = "#,##0.0x_)_);(#,##0.0x)_);#,##0.0x_)_);@_%_)"
+'ThreeWithout = "#,##0.00x_)_);(#,##0.00x)_);#,##0.00x_)_);@_%_)"
+
+If ThisWorkbook.Sheets(1).Range("DashToggle").Value = 1 Then
+    Dash = True
+Else
+    Dash = False
+End If
+
+If Dash = True Then
+    If Selection.NumberFormat = TwoWith Or Selection.NumberFormat = TwoWithout Then
+        Selection.NumberFormat = OneWith
+    'ElseIf Selection.NumberFormat = OneWith Or Selection.NumberFormat = OneWithout Then
+    '    Selection.NumberFormat = ThreeWith
+    'ElseIf Selection.NumberFormat = ThreeWith Or Selection.NumberFormat = ThreeWithout Then
+    '    Selection.NumberFormat = TwoWith
+    Else: Selection.NumberFormat = TwoWith
+    End If
+End If
+
+If Dash = False Then
+    If Selection.NumberFormat = TwoWith Or Selection.NumberFormat = TwoWithout Then
+        Selection.NumberFormat = OneWithout
+    'ElseIf Selection.NumberFormat = OneWith Or Selection.NumberFormat = OneWithout Then
+    '    Selection.NumberFormat = ThreeWithout
+    'ElseIf Selection.NumberFormat = ThreeWith Or Selection.NumberFormat = ThreeWithout Then
+    '    Selection.NumberFormat = TwoWithout
+    Else: Selection.NumberFormat = TwoWithout
+    End If
+End If
+
+End Sub
+
+Sub NumberThree()
+' NumberThree Macro
+' Shortcut key: M
+  Selection.NumberFormat = "#,##0.000_%_);(#,##0.000)_%;--_%_);@_%_)"
+'  Selection.Style = ThisWorkbook.Styles("NumberThree")
+End Sub
+
+Sub NumberTwo()
+' NumberTwo Macro
+' Shortcut key: !
+  Selection.NumberFormat = "#,##0.00_%_);(#,##0.00)_%;--_%_);@_%_)"
+'  Selection.Style = ThisWorkbook.Styles("NumberTwo")
+End Sub
+
+Sub NumberZero()
+' NumberZero Macro
+' Shortcut key: V
+  Selection.NumberFormat = "#,##0_%_);(#,##0)_%;#,##0_%_);@_%_)"
+'  Selection.Style = ThisWorkbook.Styles("NumberZero")
+End Sub
+
+Sub DollarTwo()
+' DollarTwo Macro
+' Shortcut key: $
+  Selection.NumberFormat = "$#,##0.00_%_);($#,##0.00)_%;--_%_);@_%_)"
+'  Selection.Style = ThisWorkbook.Styles("DollarTwo")
+End Sub
+
+Sub DollarZero()
+' DollarZero Macro
+' Shortcut key: K
+  Selection.NumberFormat = "$#,##0_%_);($#,##0)_%;--_%_);@_%_)"
+'  Selection.Style = ThisWorkbook.Styles("DollarZero")
+End Sub
+
+'#######################################################
+'                       Navigation
+'#######################################################
+
+Sub ZoomToggle()
+' ZoomToggle Macro
+' Keyboard Shortcut: Ctrl++
+
+  If ActiveWindow.Zoom = 100 Then
+        ActiveWindow.Zoom = 75
+    ElseIf ActiveWindow.Zoom = 75 Then
+        ActiveWindow.Zoom = 150
+    ElseIf ActiveWindow.Zoom = 150 Then
+        ActiveWindow.Zoom = 100
+    Else: ActiveWindow.Zoom = 100
+  End If
+
+End Sub
+Sub TraceDependents()
+' TraceDependents Macro
+' Keyboard Shortcut: Ctrl+g
+  On Error Resume Next
+' The following works in Excel 2000 but not in Excel 97,
+' which is why I'm using the SendKeys method
+'  Selection.ShowDependents
+  Application.SendKeys "%tud"
+End Sub
+
+Sub TracePrecedents()
+' TracePrecedents Macro
+' Keyboard Shortcut: Ctrl+t
+  On Error Resume Next
+  Selection.ShowPrecedents
+End Sub
+
+Sub RemoveArrows()
+' RemoveArrows Macro
+' Keyboard Shortcut: Ctrl+m
+  ActiveSheet.ClearArrows
+End Sub
+
+Sub RowOutlineToggle()
+' Expands or contracts a row outline and returns selection to visible portion
+' Keyboard Shortcut: CTRL+SHIFT+<
+    Set myrange = Selection.CurrentRegion
+        lastRow = myrange.Rows.Count
+        lastColumn = myrange.Columns.Count
+
+        If myrange.Rows(lastRow).ShowDetail = True Then
+            myrange.Rows(lastRow).ShowDetail = False
+            Do Until myrange.Rows(lastRow).Height > 0
+            lastRow = lastRow + 1
+            Loop
+            myrange.Rows(lastRow).Select
+            lastRow = myrange.Rows.Count
+        Else
+            myrange.Rows(lastRow).ShowDetail = True
+        End If
+        
+End Sub
+
+Sub ColumnOutlineToggle()
+' Expands or contracts a column outline and returns selection to visible portion
+' Keyboard Shortcut: CTRL+SHIFT+>
+    Set myrange = Selection.CurrentRegion
+
+        lastColumn = myrange.Columns.Count
+
+        If myrange.Columns(lastColumn).ShowDetail = True Then
+            myrange.Columns(lastColumn).ShowDetail = False
+            Do Until myrange.Columns(lastColumn).Width > 0
+            lastColumn = lastColumn + 1
+            Loop
+            myrange.Columns(lastColumn).Select
+        Else
+            myrange.Columns(lastColumn).ShowDetail = True
+        End If
+        
+End Sub
+
+Sub FreezePanesToggle()
+' Freezes and unfreezes to top and left of active cell.
+' Keyboard Shortcut:
+    If ActiveWindow.FreezePanes = True Then
+        ActiveWindow.FreezePanes = False
+    Else
+        ActiveWindow.FreezePanes = True
+    End If
+End Sub
+
+'#######################################################
+'                       Misc
+'#######################################################
+
+Sub CommentToggle()
+' A form of data validation that substitutes for a comment
+' Keyboard Shortcut: CTRL+SHIFT+?
+    Application.SendKeys "%dli{tab}{tab}{tab}"
+    'Application.SendKeys "%dli%c" clear all
+End Sub
+
+Sub SetPrintArea()
+' SetPrintArea Macro
+' Shortcut key: CTRL-SHIFT-Y
+  Dim Msg As String
+  If Selection.Count > 1 Then
+    ActiveSheet.PageSetup.PrintArea = Selection.Address
+    ActiveSheet.PageSetup.FitToPagesWide = 1
+    ActiveSheet.PageSetup.FitToPagesTall = 1
+  Else
+    Msg = ""
+    Msg = Msg & "Please select a range bigger than one cell." & vbCrLf
+    Msg = Msg & "If you really want to print one cell, go" & vbCrLf
+    Msg = Msg & "through the normal method of setting the" & vbCrLf
+    Msg = Msg & "Print Area."
+    MsgBox Msg, vbOKOnly
+  End If
+End Sub
+
+Sub ClearPrintArea()
+' ClearPrintArea Macro
+' Shortcut key: CTRL-SHIFT-W
+  ActiveSheet.PageSetup.PrintArea = ""
+End Sub
+
+Sub ConvertReference()
+' Converts the current selection between absolute and relative references.
+' Keyboard Shortcut: Ctrl+h
+  Dim RefType As String
+  Dim CurCell As Range
+  RefType = InputBox("Convert to Relative (R) or Absolute (A)?")
+  RefType = Left(Trim(RefType), 1)
+  If RefType = "r" Then
+    For Each CurCell In Selection
+      If CurCell.Formula <> "" Then
+        CurCell.Formula = Application.ConvertFormula(CurCell.Formula, xlA1, xlx1, xlRelative)
+      End If
+    Next CurCell
+  ElseIf RefType = "a" Then
+    For Each CurCell In Selection
+      If CurCell.Formula <> "" Then
+        CurCell.Formula = Application.ConvertFormula(CurCell.Formula, xlA1, xlA1, xlAbsolute)
+      End If
+    Next CurCell
+  End If
+End Sub
+
+Sub Orientation()
+    orient = "Portrait"
+    oriental = "Landscape"
+    If ActiveSheet.PageSetup.Orientation = xlLandscape Then
+        orient = "Landscape"
+        oriental = "Portrait"
+    End If
+    Msg = "Your spreadsheet orientation is currently set to " & orient & "." & vbCrLf
+    Msg = Msg & "Would you like to change the orientation to " & oriental & "?"
+    ans = MsgBox(Msg, vbYesNo)
+    If ans = vbYes Then
+      If orient = "Landscape" Then ActiveSheet.PageSetup.Orientation = xlPortrait
+      If orient = "Portrait" Then ActiveSheet.PageSetup.Orientation = xlLandscape
+    End If
+End Sub
+
+Sub GridlinesToggle()
+    If ActiveWindow.DisplayGridlines = False Then
+        ActiveWindow.DisplayGridlines = True
+    Else
+        ActiveWindow.DisplayGridlines = False
+    End If
+End Sub
+
+Sub PrintShortcuts()
+  Dim OldArea As String, NewArea As String
+  OldArea = ""
+  'Save previous print area
+  If ActiveSheet.PageSetup.PrintArea <> "" Then
+    OldArea = ActiveSheet.PageSetup.PrintArea
+  End If
+  On Error Resume Next
+  'Get new print area
+  NewArea = ThisWorkbook.Names("MacrosPrintArea").RefersTo
+  If Err.Number <> 0 Then
+    MsgBox "Unable to locate M&A Shortcuts Cheatsheet."
+    Exit Sub
+  End If
+  ActiveSheet.PageSetup.PrintArea = NewArea
+  ThisWorkbook.PrintOut
+  'Restore print area to previous setting
+  If OldArea <> "" Then
+    ActiveSheet.PageSetup.PrintArea = OldArea
+  Else
+    ActiveSheet.PageSetup.PrintArea = ""
+  End If
+End Sub
+
+Sub InsertNamesOnAll()
+  Dim i As Integer
+  Dim NameToAdd, theRange, sh
+  theRange = Selection.Address()
+  NameToAdd = InputBox("Name to add to selected sheets? (Please do not include sheet name)", "Name Entry", Type:=2)
+  If NameToAdd = False Then
+    Exit Sub
+  Else
+    For Each sh In ActiveWorkbook.Windows(1).SelectedSheets
+      For i = 1 To Worksheets.Count
+        If sh.Name = Worksheets(i).Name Then
+          Worksheets(i).Names.Add Worksheets(i).Name & "!" & NameToAdd, RefersToLocal:= _
+            "=" & Worksheets(i).Name & "!" & theRange
+        End If
+      Next i
+    Next
+  End If
+End Sub
+
+Sub IsErrorToggle()
+    Dim InsertFormula As String
+    Dim ExistingFormula As String
+    Dim Filler1 As String
+    Dim Filler2 As String
+    Dim FormulaStart As String
+    Dim CombinedFormula As String
+    
+    On Error Resume Next
+    Filler1 = """NA"""
+    Filler2 = """NM"""
+    FormulaStart = "=IF(ISERROR("
+    
+        Application.ScreenUpdating = False
+        Selection.HorizontalAlignment = xlRight
+        'if formula and not already iserror
+        If Left(Selection.Formula, 1) = "=" And Left(Selection.Formula, Len(FormulaStart)) <> FormulaStart Then
+            InsertFormula = ActiveCell.Formula
+            InsertFormula = Right(InsertFormula, Len(InsertFormula) - 1)
+            CombinedFormula = FormulaStart & InsertFormula & ")," & Filler1 & ", " & InsertFormula & ")"
+            ActiveCell.Formula = CombinedFormula
+        'if iserror and Filler1
+        ElseIf Left(Selection.Formula, Len(FormulaStart)) = FormulaStart And InStr(Selection.Formula, Filler1) <> 0 Then
+            ExistingFormula = ActiveCell.Formula
+            ExistingFormula = Replace(ExistingFormula, Filler1, Filler2)
+            ActiveCell.Formula = ExistingFormula
+        'if iserror and Filler2, back to original formula
+        ElseIf Left(Selection.Formula, Len(FormulaStart)) = FormulaStart And InStr(Selection.Formula, Filler2) <> 0 Then
+            ExistingFormula = ActiveCell.Formula
+            ExistingFormula = Left(ExistingFormula, InStr(ExistingFormula, Filler2) - 3)
+            ExistingFormula = Right(ExistingFormula, Len(ExistingFormula) - Len(FormulaStart))
+            ActiveCell.Formula = "=" & ExistingFormula
+        End If
+
+End Sub
+
+Sub IndirectVlookupToggle()
+    Dim InsertFormula As String
+    Dim ExistingFormula As String
+    Dim LookupValue As String
+    Dim CombinedFormula As String
+    Dim Case1, Case2 As String
+    Dim Case1End, Case2End As String
+    Dim Case1StartLength, Case2StartLength As String
+    Dim Case1EndLength, Case2EndLength As String
+    
+    On Error Resume Next
+    LookupValue = "Tick"
+    Case1 = "=VLOOKUP(" & LookupValue & ", INDIRECT(" & """" & "'" & "!masterDOM.XLS" & "'" & "!M_Table" & """" & "),"
+    Case1End = ",0)"
+    Case2 = "=INDIRECT(" & LookupValue & "&" & """.XLS!"
+    Case2End = """)"
+   'Debug.Print Case1, Case2
+   
+   Application.ScreenUpdating = False
+        'if number and not already case1 or case2, then case1
+        If IsNumeric(Selection.Value) And Left(Selection.Formula, Len(Case1)) <> Case1 _
+        And Left(Selection.Formula, Len(Case2)) <> Case2 Then
+            InsertFormula = Selection.Formula
+                'if reference, then remove sign
+                If Left(Selection.Formula, 1) = "=" Then
+                    InsertFormula = Right(InsertFormula, Len(InsertFormula) - 1)
+                End If
+            CombinedFormula = Case1 & InsertFormula & Case1End
+            'Debug.Print CombinedFormula
+            ActiveCell.Formula = CombinedFormula
+        'if not a number and not already case1 or case2, then case2
+        ElseIf IsNumeric(Selection.Value) = False And Left(Selection.Formula, Len(Case1)) <> Case1 _
+        And Left(Selection.Formula, Len(Case2)) <> Case2 Then
+            InsertFormula = Selection.Formula
+                'if reference, then reconfigure with ampersand
+                If Left(Selection.Formula, 1) = "=" Then
+                    InsertFormula = Right(InsertFormula, Len(InsertFormula) - 1)
+                    CombinedFormula = Case2 & """" & "&" & " " & InsertFormula & ")"
+                Else
+                    CombinedFormula = Case2 & InsertFormula & Case2End
+                End If
+            'Debug.Print CombinedFormula
+            ActiveCell.Formula = CombinedFormula
+        'if case1, then back to original
+        ElseIf Left(Selection.Formula, Len(Case1)) = Case1 Then
+            ExistingFormula = ActiveCell.Formula
+            ExistingFormula = Right(ExistingFormula, Len(ExistingFormula) - Len(Case1))
+            ExistingFormula = Left(ExistingFormula, Len(ExistingFormula) - Len(Case1End))
+            'Debug.Print ExistingFormula
+            'if reference, then add back sign
+            If IsNumeric(ExistingFormula) = False Then
+                ActiveCell.Formula = "=" & ExistingFormula
+            Else
+                ActiveCell.Formula = ExistingFormula
+            End If
+        'if case2, then back to original
+        ElseIf Left(Selection.Formula, Len(Case2)) = Case2 Then
+            ExistingFormula = ActiveCell.Formula
+            'if reference, then remove ampersand
+            If Left(Right(ExistingFormula, Len(ExistingFormula) - Len(Case2) - 1), 1) = "&" Then
+                ExistingFormula = Right(ExistingFormula, Len(ExistingFormula) - Len(Case2) - 3)
+                ExistingFormula = Left(ExistingFormula, Len(ExistingFormula) - 1)
+                'Debug.Print ExistingFormula
+                ActiveCell.Formula = "=" & ExistingFormula
+            Else
+                ExistingFormula = Right(ExistingFormula, Len(ExistingFormula) - Len(Case2))
+                ExistingFormula = Left(ExistingFormula, Len(ExistingFormula) - Len(Case2End))
+                'Debug.Print ExistingFormula
+                ActiveCell.Formula = ExistingFormula
+            End If
+        End If
+
+End Sub
+
+
+'#######################################################
+'                       Testing
+'#######################################################
