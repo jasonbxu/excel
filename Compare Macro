@@ -8,9 +8,11 @@ s1 = InputBox("Enter the most recent sheet name")
 If s1 = "" Then Exit Sub
 s2 = InputBox("Enter the prior sheet name")
 If s2 = "" Then Exit Sub
+' This is the unique primary key that ties the two workbooks
 ee = InputBox("What Column # is the Employee ID on?" & vbNewLine & "Input the Column Number, not Letter!")
 If ee = 0 Then Exit Sub
 
+'sample of what values s1, s2, and ee are 
 's1 = "6_9_2015"
 's2 = "6_8_2015"
 'ee = 1
@@ -54,6 +56,7 @@ ref_Col = old_info.Columns.Count
 Set ref_range = old_info.Range(ActiveWorkbook.Sheets(sht_old).Cells(2, 1), _
 ActiveWorkbook.Sheets(sht_old).Cells(2, ref_Col))
 
+' starts at row 3, change if necessary
 For curr_row = 3 To lastRow
 
     row_diffs = 0
@@ -61,7 +64,10 @@ For curr_row = 3 To lastRow
     For curr_col = 1 To lastCol
     
     On Error Resume Next
-'    MsgBox (new_info.Cells(2, curr_col).Value)
+'   Test case to make sure the correct row and column is being selected    
+'   MsgBox (new_info.Cells(2, curr_col).Value)
+
+'   Could be more efficient to implement a native match function
     lookup_col = WorksheetFunction.Match(new_info.Cells(2, curr_col), ref_range, 0)
     
 '    MsgBox (lookup_col)
