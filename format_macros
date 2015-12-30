@@ -26,7 +26,7 @@ Public Sub Auto_Open()
     .OnKey "^w", "Black"
     .OnKey "^q", "Blue"
     '.OnKey "^a", "Red"
-    .OnKey "^y", "OracleColor"
+    .OnKey "^y", "BrightRed"
     '.OnKey "^m", "BackgroundColor"
     'Numbers
     .OnKey "+^C", "PasteFormat"
@@ -328,8 +328,8 @@ Sub BackgroundColor()
     End If
 End Sub
 
-Sub OracleColor()
-' Set Background to Oracle Red, Text to White
+Sub BrightRed()
+' Set Background to Bright Red, Text to White
     If Selection.Interior.ColorIndex = xlNone Then
         Selection.Interior.Color = RGB(255, 0, 0)
         Selection.Font.Color = RGB(255, 255, 255)
